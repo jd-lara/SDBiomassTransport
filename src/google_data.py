@@ -6,6 +6,8 @@ Created on Fri Nov  3 17:01:16 2017
 @author: jdlara
 """
 
+# ALready done, don't re-run without Jose, interacts directly with google
+
 import googlemaps
 #from sqlalchemy import Table, Column, String, MetaData
 from joblib import Parallel, delayed

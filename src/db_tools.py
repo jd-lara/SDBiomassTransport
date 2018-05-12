@@ -61,11 +61,18 @@ def dbconfig(user,passwd,dbname, echo_i=False):
 
 ######################Information retrieval queries############################
 
+
 def getRoutes(model):
     e = engine
     df_routes = pd.read_sql_query('select landing_no, feeder_no from lemmav2.substation_routes where api_distance > 0 and api_distance is not null and center_ok is NULL;', e)
     route_list = list(zip(df_routes.landing_no, df_routes.feeder_no))
     return route_list
+
+# Some landings are on roads that don't have legitimate google routes because road data used to create landings != road data used by google
+    # but very few road routes have that error
+    # creates a 99 instead of a real distance
+    # Jose will fix errors in landings due to distance = 0 or distnace = 99
+    # For purposes of Working with Chris, we can manually go through landing location errors rather than hard fixing it
 
 def getFeeders(model):
     e = engine
@@ -75,10 +82,13 @@ def getFeeders(model):
 
 def getLandings(model):
     e = engine
+    # df_routes is a data frame of routes from the databse stored locally in memory
     df_routes = pd.read_sql_query('select landing_no from lemmav2.substation_routes where api_distance > 0 and api_distance is not null and center_ok is NULL;', e)
     biomass_temp = df_routes["landing_no"].unique()
     biomass_list = [ int(b) for b in biomass_temp]
     return biomass_list
+
+# Landing ID numbers are not sequential, don't worry about what they actually are
 
 
 def getFeedersMax(model, s):
