@@ -15,9 +15,9 @@ from __future__ import division
 from pyomo import environ as pm
 from pyomo.opt import SolverFactory
 import site
-site.addsitedir('Documents/SDBiomassTransport/src/')
+site.addsitedir('src/')
 import db_tools as db
-#import pw_cost as pw
+import pw_cost as pw
 
 dbname = 'apl_cec'
 user = 'jdlara'
@@ -36,7 +36,6 @@ tm.LANDINGS = pm.Set(initialize=db.getLandings, doc='Location of Biomass sources
 tm.FEEDERS = pm.Set(initialize=db.getFeeders, doc='Location of Feeders') 
 tm.ROUTES = pm.Set(dimen=2, doc='Allows routes from sources to sinks', initialize=db.getRoutes)
 
-# Pyomo is calling getLandings beacuse getLandings is called within pm.Set
 
 ##################### Define Variables ####################
 
